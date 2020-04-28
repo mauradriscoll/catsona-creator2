@@ -99,8 +99,8 @@ def detect(input_image, output_path, use_json, annotate_faces,
     if use_json:
         json = []
     else:
-        print '\nImage: {}'.format(input_image)
-        print 'Number of cat faces detected: {}'.format(d.result.face_count)
+        print ('\nImage: {}'.format(input_image))
+        print ('Number of cat faces detected: {}'.format(d.result.face_count))
 
     if annotate_faces or annotate_landmarks:
         w = img.shape[1]
@@ -144,7 +144,7 @@ def detect(input_image, output_path, use_json, annotate_faces,
             cv2.imwrite(filename, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 
     if use_json:
-        print json
+        print (json)
 
 
 def get_output_file(output_path, input_image, extra, ext):
@@ -156,95 +156,95 @@ def get_output_file(output_path, input_image, extra, ext):
 
 
 def print_face_info(i, face, shape):
-    print 'Face #{}: ({}, {}), ({}, {})'.format(
+    print ('Face #{}: ({}, {}), ({}, {})'.format(
         i,
         face.top(),
         face.left(),
         face.right(),
         face.bottom()
-    )
+    ))
     offset = (shape.part(CatFaceLandmark.RIGHT_EYE).x - shape.part(CatFaceLandmark.LEFT_EYE).x)/5
     #offset = (shape.part(lines[2][0]).x - shape.part(lines[3][0]).x)/5
     for landmark in CatFaceLandmark.all():
 
 
-        print '   {}: ({}, {})'.format(
+        print ('   {}: ({}, {})'.format(
             landmark['name'],
             shape.part(landmark['value']).x,
             shape.part(landmark['value']).y
-        )
+        ))
         if(landmark['name']=='Chin'):
-            print '   {}: ({}, {})'.format(
+            print ('   {}: ({}, {})'.format(
                 'Chin Left',
                 shape.part(landmark['value']).x-offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Chin Right',
                 shape.part(landmark['value']).x+offset,
                 shape.part(landmark['value']).y
-            )
+            ))
 
         if(landmark['name']=='Left Eye'):
-            print '   {}: ({}, {})'.format(
+            print ('   {}: ({}, {})'.format(
                 'Left Eye Left',
                 shape.part(landmark['value']).x-offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Left Eye Right',
                 shape.part(landmark['value']).x+offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Left Eye Above',
                 shape.part(landmark['value']).x,
                 shape.part(landmark['value']).y-offset
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Left Eye Below',
                 shape.part(landmark['value']).x,
                 shape.part(landmark['value']).y+offset
-            )
+            ))
 
         if(landmark['name']=='Right Eye'):
-            print '   {}: ({}, {})'.format(
+            print ('   {}: ({}, {})'.format(
                 'Right Eye Left',
                 shape.part(landmark['value']).x-offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Right Eye Right',
                 shape.part(landmark['value']).x+offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Right Eye Above',
                 shape.part(landmark['value']).x,
                 shape.part(landmark['value']).y-offset
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Right Eye Below',
                 shape.part(landmark['value']).x,
                 shape.part(landmark['value']).y+offset
-            )
+            ))
 
         if(landmark['name']=='Nose'):
-            print '   {}: ({}, {})'.format(
+            print ('   {}: ({}, {})'.format(
                 'Nose Left',
                 shape.part(landmark['value']).x-offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Nose Right',
                 shape.part(landmark['value']).x+offset,
                 shape.part(landmark['value']).y
-            )
-            print '   {}: ({}, {})'.format(
+            ))
+            print ('   {}: ({}, {})'.format(
                 'Nose Below',
                 shape.part(landmark['value']).x,
                 shape.part(landmark['value']).y+offset
-            )
+            ))
 
 
 def get_face_json(face, shape):
@@ -252,6 +252,51 @@ def get_face_json(face, shape):
     for landmark in CatFaceLandmark.all():
         landmarks[landmark['name']] = [shape.part(landmark['value']).x,
                                        shape.part(landmark['value']).y]
+        if(landmark['name']=='Chin'):
+            landmarks['Chin Left'] = [shape.part(landmark['value']).x-65,
+                shape.part(landmark['value']).y]
+            
+            
+            landmarks['Chin Right'] = [shape.part(landmark['value']).x+65,
+                shape.part(landmark['value']).y]
+
+
+        if(landmark['name']=='Left Eye'):
+            landmarks['Left Eye Left'] = [shape.part(landmark['value']).x-60,
+                shape.part(landmark['value']).y]
+
+            landmarks['Left Eye Right'] = [shape.part(landmark['value']).x+60,
+                shape.part(landmark['value']).y]
+            
+            landmarks['Left Eye Above'] = [shape.part(landmark['value']).x,
+                shape.part(landmark['value']).y-60]
+            landmarks['Left Eye Below'] = [shape.part(landmark['value']).x,
+                shape.part(landmark['value']).y+60]
+
+        
+        if(landmark['name']=='Right Eye'):
+            landmarks['Right Eye Left'] = [shape.part(landmark['value']).x-60,
+                shape.part(landmark['value']).y]
+
+            landmarks['Right Eye Right'] = [shape.part(landmark['value']).x+60,
+                shape.part(landmark['value']).y]
+            
+            landmarks['Right Eye Above'] = [shape.part(landmark['value']).x,
+                shape.part(landmark['value']).y-60]
+            landmarks['Right Eye Below'] = [shape.part(landmark['value']).x,
+                shape.part(landmark['value']).y+60]
+            
+        
+        
+        if(landmark['name']=='Nose'):
+            landmarks['Nose Left'] = [shape.part(landmark['value']).x-55,
+                shape.part(landmark['value']).y]
+            landmarks['Nose Right'] = [shape.part(landmark['value']).x+55,
+                shape.part(landmark['value']).y]
+            landmarks['Nose Below'] = [shape.part(landmark['value']).x,
+                shape.part(landmark['value']).y+55]
+            
+        
 
     return {
         "face": {
