@@ -5,7 +5,7 @@ import numpy as np
 from pycatfd import catfd_formain as catfd
 from Face_Morph import face_morph_main as face_morph
 from Detect_Human_Facial_Features import detect_human as humanfd
-from FaceSwap.face_swap_wrapper import fs_wrapper
+from Face_Swap.face_swap_wrapper import fs_wrapper
 
 def main():
     parser = argparse.ArgumentParser()
