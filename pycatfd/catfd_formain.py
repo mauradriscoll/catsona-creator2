@@ -225,7 +225,7 @@ def get_face_json(face, shape):
 
         
         if(landmark['name']=='Right Eye'):
-            landmarks['Right Eye Right'] = [shape.part(landmark['value']).x-60,
+            landmarks['Right Eye Left'] = [shape.part(landmark['value']).x-60,
                 shape.part(landmark['value']).y]
 
             landmarks['Right Eye Right'] = [shape.part(landmark['value']).x+60,

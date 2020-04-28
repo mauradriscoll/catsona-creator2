@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/mauradriscoll/Documents/Computer_Vision/catsona-creator/env"
+VIRTUAL_ENV="/Users/jnieto/Desktop/computerVision/catsona-creator2/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
