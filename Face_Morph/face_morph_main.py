@@ -12,8 +12,9 @@ def readPoints(path) :
     # Read points
     with open(path) as file :
         for line in file :
-            x, y = line.split()
-            points.append((int(x), int(y)))
+            if line != None:
+                x, y = line.split()
+                points.append((int(x), int(y)))
 
     return points
 
@@ -70,10 +71,10 @@ def morphTriangle(img1, img2, img, t1, t2, t, alpha) :
     img[r[1]:r[1]+r[3], r[0]:r[0]+r[2]] = img[r[1]:r[1]+r[3], r[0]:r[0]+r[2]] * ( 1 - mask ) + imgRect * mask
 
 
-if __name__ == '__main__' :
+def morph(filename1, filename2):
 
-    filename1 = 'maura.jpg'
-    filename2 = 'orange_cat.jpg'
+    # filename1 = 'maura.jpg'
+    # filename2 = 'orange_cat.jpg'
     alpha = 0.5
     
     # Read images
@@ -97,6 +98,8 @@ if __name__ == '__main__' :
     points2 = readPoints(filename2 + '.txt')
     points = [];
 
+    print(points1)
+
     # Compute weighted average point coordinates
     for i in range(0, len(points1)):
         x = ( 1 - alpha ) * points1[i][0] + alpha * points2[i][0]
@@ -110,7 +113,6 @@ if __name__ == '__main__' :
     subdiv  = cv2.Subdiv2D(rect)
 
     for point in points:
-        print(point)
         subdiv.insert(point)
         
     #perform Dulaney Triangulation
@@ -141,7 +143,7 @@ if __name__ == '__main__' :
             # Morph one triangle at a time.
             morphTriangle(img1, img2, imgMorph, t1, t2, t, alpha)
 
-
+    return imgMorph
     # Display Result
-    cv2.imshow("Morphed Face", np.uint8(imgMorph))
-    cv2.waitKey(0)
+    # cv2.imshow("Morphed Face", np.uint8(imgMorph))
+    # cv2.waitKey(0)
