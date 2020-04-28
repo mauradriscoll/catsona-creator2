@@ -75,7 +75,7 @@ def morph(filename1, filename2):
 
     # filename1 = 'maura.jpg'
     # filename2 = 'orange_cat.jpg'
-    alpha = 0.5
+    alpha = 0.15
     
     # Read images
     img1 = cv2.imread(filename1);
@@ -104,7 +104,7 @@ def morph(filename1, filename2):
     for i in range(0, len(points1)):
         x = ( 1 - alpha ) * points1[i][0] + alpha * points2[i][0]
         y = ( 1 - alpha ) * points1[i][1] + alpha * points2[i][1]
-        points.append((x,y))
+        points.append((round(x,2),round(y,2)))
 
     #compute the triangles
     #defining the space I want to partitiion (the whole image)
@@ -121,7 +121,7 @@ def morph(filename1, filename2):
     for row in triangles:
         newrow = []
         for i in range(0,6,2):
-            point = (row[i],row[i+1])
+            point = (round(row[i].item(),2),round(row[i+1].item(),2))
             index = points.index(point)
             newrow.append(index)
         point_triangles.append(newrow)

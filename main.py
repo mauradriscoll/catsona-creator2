@@ -5,6 +5,7 @@ import numpy as np
 from pycatfd import catfd_formain as catfd
 from Face_Morph import face_morph_main as face_morph
 from Detect_Human_Facial_Features import detect_human as humanfd
+from FaceSwap.face_swap_wrapper import fs_wrapper
 
 def main():
     parser = argparse.ArgumentParser()
@@ -13,6 +14,7 @@ def main():
     parser.add_argument("-c", "--cat", help="Enter filename of Cat")
     parser.add_argument("-human", "--human", required=True, help="Enter filename of Human")
     parser.add_argument("-catsona", "--catsona",  help="Enter filename of catsona")
+    parser.add_argument("-fs", action='store_true', help="FaceSwap On")
 
 
     args = parser.parse_args()
@@ -61,11 +63,14 @@ def main():
     #TODO: Get proper aligned features into file to test with face_morph
     if catsona_image is not None:
         img = face_morph.morph(human_image, catsona_image)
+        if args.fs:
+            img = fs_wrapper(np.uint8(img),catsona_image)
     else:
         img = face_morph.morph(human_image, cat_image)
 
     # Display Result
     cv2.imshow("Morphed Face", np.uint8(img))
     cv2.waitKey(0)
+
 if __name__ == '__main__':
     main()

@@ -1,5 +1,6 @@
 certifi==2020.4.5.1
 chardet==3.0.4
+cmake==3.17.1
 cycler==0.10.0
 decorator==4.4.2
 dlib==19.19.0

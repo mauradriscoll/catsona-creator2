@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/mauradriscoll/Documents/Computer_Vision/catsona-creator/env"
+set -gx VIRTUAL_ENV "/Users/jnieto/Desktop/computerVision/catsona-creator2/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
