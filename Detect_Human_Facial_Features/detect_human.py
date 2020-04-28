@@ -82,7 +82,6 @@ def visualize_facial_landmarks(image, shape, colors=None, alpha=0.75):
     cv2.addWeighted(overlay, alpha, output, 1 - alpha, 0, output)
 
     # return the output image
-    print(facial_features_cordinates)
     return output, facial_features_cordinates
 def detect(image):
     # initialize dlib's face detector (HOG-based) and then create
