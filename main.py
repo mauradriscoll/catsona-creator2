@@ -21,7 +21,8 @@ def main():
     catsona_image = args.catsona
 
     #Get cat features
-    cat_features = catfd.detect(cat_image)
+    if cat_image is not None:
+        cat_features = catfd.detect(cat_image)
     #print(cat_features[0][0])
     #Get human features
     
@@ -31,23 +32,31 @@ def main():
         for part in catsona_features:
             for point in catsona_features[part]:
                 fcc.write(str(point[0]) + " " + str(point[1])+"\n")
+        fcc.write(str(0) + " " + str(0) + "\n")
+        fcc.write(str(497) + " " + str(0) + "\n")
+        fcc.write(str(0) + " " + str(497) + "\n")
+        fcc.write(str(497) + " " + str(497) + "\n")
         fcc.close()
 
     fh = open(human_image + '.txt', "w")
-    fc = open(cat_image + '.txt', "w")
     human_features = humanfd.detect(human_image)
     #write human features to a file to be interpreted by face morph
     for part in human_features:
         for point in human_features[part]:
             fh.write(str(point[0]) + " " + str(point[1])+"\n")
+    fh.write(str(0) + " " + str(0) + "\n")
+    fh.write(str(497) + " " + str(0) + "\n")
+    fh.write(str(0) + " " + str(497) + "\n")
+    fh.write(str(497) + " " + str(497) + "\n")
     fh.close()
     #write cat features to a file that can be interpreted by Face Morph
     if cat_image is not None:
+        fc = open(cat_image + '.txt', "w")
         for part in cat_features[0]['face']['landmarks']:   
             point =  cat_features[0]['face']['landmarks'][part]
             print(point)
             fc.write(str(point[0]) + " " + str(point[1])+"\n")
-    fc.close()
+        fc.close()
     
     #TODO: Get proper aligned features into file to test with face_morph
     if catsona_image is not None:
