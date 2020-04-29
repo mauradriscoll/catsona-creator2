@@ -2,6 +2,7 @@ import sys
 import argparse
 import cv2
 import numpy as np
+import imutils
 from pycatfd import catfd_formain as catfd
 from Face_Morph import face_morph_main as face_morph
 from Detect_Human_Facial_Features import detect_human as humanfd
@@ -22,6 +23,12 @@ def main():
     human_image = args.human
     catsona_image = args.catsona
 
+    catsona_image_image = cv2.imread(catsona_image)
+    human_image_image = cv2.imread(human_image)
+
+    catsona_image_image = imutils.resize(catsona_image_image, width=500)
+    human_image_image = imutils.resize(human_image_image, width=500)
+
     #Get cat features
     if cat_image is not None:
         cat_features = catfd.detect(cat_image)
@@ -35,9 +42,9 @@ def main():
             for point in catsona_features[part]:
                 fcc.write(str(point[0]) + " " + str(point[1])+"\n")
         fcc.write(str(0) + " " + str(0) + "\n")
-        fcc.write(str(497) + " " + str(0) + "\n")
-        fcc.write(str(0) + " " + str(497) + "\n")
-        fcc.write(str(497) + " " + str(497) + "\n")
+        fcc.write(str(catsona_image_image.shape[1]-1) + " " + str(0) + "\n")
+        fcc.write(str(0) + " " + str(catsona_image_image.shape[0]-1) + "\n")
+        fcc.write(str(catsona_image_image.shape[1]-1) + " " + str(catsona_image_image.shape[0]-1) + "\n")
         fcc.close()
 
     fh = open(human_image + '.txt', "w")
@@ -47,9 +54,9 @@ def main():
         for point in human_features[part]:
             fh.write(str(point[0]) + " " + str(point[1])+"\n")
     fh.write(str(0) + " " + str(0) + "\n")
-    fh.write(str(497) + " " + str(0) + "\n")
-    fh.write(str(0) + " " + str(497) + "\n")
-    fh.write(str(497) + " " + str(497) + "\n")
+    fh.write(str(human_image_image.shape[1]-1) + " " + str(0) + "\n")
+    fh.write(str(0) + " " + str(human_image_image.shape[0]-1) + "\n")
+    fh.write(str(human_image_image.shape[1]-1) + " " + str(human_image_image.shape[0]-1) + "\n")
     fh.close()
     #write cat features to a file that can be interpreted by Face Morph
     if cat_image is not None:
