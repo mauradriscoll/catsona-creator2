@@ -16,12 +16,14 @@ def main():
     parser.add_argument("-human", "--human", required=True, help="Enter filename of Human")
     parser.add_argument("-catsona", "--catsona",  help="Enter filename of catsona")
     parser.add_argument("-fs", action='store_true', help="FaceSwap On")
+    parser.add_argument("-alpha", "--alpha", help="If desired, provide alpha level to control blending range [0-1]", default = 0.15)
 
 
     args = parser.parse_args()
     cat_image = args.cat
     human_image = args.human
     catsona_image = args.catsona
+    alpha = float(args.alpha)
 
     catsona_image_image = cv2.imread(catsona_image)
     human_image_image = cv2.imread(human_image)
@@ -32,9 +34,7 @@ def main():
     #Get cat features
     if cat_image is not None:
         cat_features = catfd.detect(cat_image)
-    #print(cat_features[0][0])
-    #Get human features
-    
+    #if catsona is specified
     if catsona_image is not None:
         catsona_features = humanfd.detect(catsona_image)
         fcc = open(catsona_image + '.txt', "w")
@@ -69,11 +69,11 @@ def main():
     
     #TODO: Get proper aligned features into file to test with face_morph
     if catsona_image is not None:
-        img = face_morph.morph(human_image, catsona_image)
+        img = face_morph.morph(human_image, catsona_image, alpha)
         if args.fs:
             img = fs_wrapper(np.uint8(img),catsona_image)
     else:
-        img = face_morph.morph(human_image, cat_image)
+        img = face_morph.morph(human_image, cat_image, alpha)
 
     # Display Result
     cv2.imshow("Morphed Face", np.uint8(img))

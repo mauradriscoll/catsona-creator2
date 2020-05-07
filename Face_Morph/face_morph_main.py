@@ -71,11 +71,9 @@ def morphTriangle(img1, img2, img, t1, t2, t, alpha) :
     img[r[1]:r[1]+r[3], r[0]:r[0]+r[2]] = img[r[1]:r[1]+r[3], r[0]:r[0]+r[2]] * ( 1 - mask ) + imgRect * mask
 
 
-def morph(filename1, filename2):
+def morph(filename1, filename2, alpha):
 
-    # filename1 = 'maura.jpg'
-    # filename2 = 'orange_cat.jpg'
-    alpha = 0.15
+    alpha = alpha
     
     # Read images
     img1 = cv2.imread(filename1);
