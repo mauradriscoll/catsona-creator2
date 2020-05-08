@@ -1,6 +1,4 @@
-# catsona-creator2
-
-How to Create Your Own Catsona:  
+# How to Create Your Own Catsona: 
 
 To use, open catsona-creator2 as well as a terminal.   
 Create a virtual enviornment using our requirements.txt file and activate.   
