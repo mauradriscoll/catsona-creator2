@@ -80,6 +80,7 @@ if __name__ == '__main__' :
     img1 = cv2.imread(filename1);
     img2 = cv2.imread(filename2);
 
+    #resize image to have feature points match those of get feature poiints
     img1 = imutils.resize(img1, width=500)
     img2 = imutils.resize(img2, width=500)
 
@@ -87,10 +88,6 @@ if __name__ == '__main__' :
     # Convert Mat to float data type
     img1 = np.float32(img1)
     img2 = np.float32(img2)
-
-    #img1 = cv2.resize(img1, (600, 800))
-    print(img1.shape)
-    print(img2.shape)
 
     # Read array of corresponding points
     points1 = readPoints(filename1 + '.txt')
@@ -108,9 +105,8 @@ if __name__ == '__main__' :
     size = img1.shape
     rect = (0,0,size[1],size[0])
     subdiv  = cv2.Subdiv2D(rect)
-
+    #add each point of potentail morphed image to subdivision
     for point in points:
-        print(point)
         subdiv.insert(point)
         
     #perform Dulaney Triangulation
@@ -122,12 +118,13 @@ if __name__ == '__main__' :
             point = (row[i],row[i+1])
             index = points.index(point)
             newrow.append(index)
+        #instead of (x,y) of triangle vertices add the index of the point to the row
         point_triangles.append(newrow)
     
     # Allocate space for final output
     imgMorph = np.zeros(img1.shape, dtype = img1.dtype)
-
     
+    #morph each correpsonding triangle from the three images
     for triangle in point_triangles:
 
             x = triangle[0]

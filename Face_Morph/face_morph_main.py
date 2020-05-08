@@ -73,12 +73,15 @@ def morphTriangle(img1, img2, img, t1, t2, t, alpha) :
 
 def morph(filename1, filename2, alpha):
 
+    #set alpha to user defined alpha
     alpha = alpha
     
     # Read images
     img1 = cv2.imread(filename1);
     img2 = cv2.imread(filename2);
 
+    #resize images so the feature points match up with the points
+    #found in the detect human feature points
     img1 = imutils.resize(img1, width=500)
     img2 = imutils.resize(img2, width=500)
 
@@ -87,16 +90,10 @@ def morph(filename1, filename2, alpha):
     img1 = np.float32(img1)
     img2 = np.float32(img2)
 
-    #img1 = cv2.resize(img1, (600, 800))
-    print(img1.shape)
-    print(img2.shape)
-
     # Read array of corresponding points
     points1 = readPoints(filename1 + '.txt')
     points2 = readPoints(filename2 + '.txt')
     points = [];
-
-    print(points1)
 
     # Compute weighted average point coordinates
     for i in range(0, len(points1)):
@@ -105,11 +102,11 @@ def morph(filename1, filename2, alpha):
         points.append((round(x,2),round(y,2)))
 
     #compute the triangles
-    #defining the space I want to partitiion (the whole image)
+    #defining the space I want to partition (the whole image)
     size = img1.shape
     rect = (0,0,size[1],size[0])
     subdiv  = cv2.Subdiv2D(rect)
-
+    #add each point in morphed image to subdiv
     for point in points:
         subdiv.insert(point)
         
@@ -122,12 +119,13 @@ def morph(filename1, filename2, alpha):
             point = (round(row[i].item(),2),round(row[i+1].item(),2))
             index = points.index(point)
             newrow.append(index)
+        #add row with indices of points to the new point_triangles array
         point_triangles.append(newrow)
     
     # Allocate space for final output
     imgMorph = np.zeros(img1.shape, dtype = img1.dtype)
 
-    
+    #morph each corresponding triangle from the three images
     for triangle in point_triangles:
 
             x = triangle[0]
@@ -142,6 +140,3 @@ def morph(filename1, filename2, alpha):
             morphTriangle(img1, img2, imgMorph, t1, t2, t, alpha)
 
     return imgMorph
-    # Display Result
-    # cv2.imshow("Morphed Face", np.uint8(imgMorph))
-    # cv2.waitKey(0)
