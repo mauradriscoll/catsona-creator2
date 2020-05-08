@@ -7,7 +7,7 @@ from Face_Swap.face_swap import face_swap
 
 def fs_wrapper(src,dest):
  '''function that takes in two images and is 
-    used to produce face the swapped image'''
+    used to produce the face swapped image'''
     
     dst_img = cv2.imread(dest)
 
