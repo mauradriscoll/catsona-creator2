@@ -18,7 +18,7 @@ def main():
     parser.add_argument("-fs", action='store_true', help="FaceSwap On")
     parser.add_argument("-alpha", "--alpha", help="If desired, provide alpha level to control blending range [0-1]", default = 0.15)
 
-
+    #newbranch2
     args = parser.parse_args()
     cat_image = args.cat
     human_image = args.human
