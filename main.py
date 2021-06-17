@@ -9,6 +9,11 @@ from Detect_Human_Facial_Features import detect_human as humanfd
 from Face_Swap.face_swap_wrapper import fs_wrapper
 
 def main():
+<<<<<<< HEAD
+=======
+    #new code
+    #more new code
+>>>>>>> style: 💄 new comment
     parser = argparse.ArgumentParser()
 
     #input images
