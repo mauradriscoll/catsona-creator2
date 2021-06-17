@@ -27,7 +27,7 @@ def main():
 
     catsona_image_image = cv2.imread(catsona_image)
     human_image_image = cv2.imread(human_image)
-
+    #branched branch
     catsona_image_image = imutils.resize(catsona_image_image, width=500)
     human_image_image = imutils.resize(human_image_image, width=500)
 
